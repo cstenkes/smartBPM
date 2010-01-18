@@ -1,0 +1,119 @@
+                      Brevissimus Co. Smart BPM v 0.1.11
+ 
+
+  What is it? 
+  -----------
+  
+  SmartBPM is a simple business process management web based engine.
+  To integrate into any existing EAI system the most of its functionality can be 
+  accessed via webService.
+
+  
+  Why?
+  ----
+  
+  Because SmartBPM is a very simple business process implementation without need 
+  J2EE application resources thanks good quality open source java tools. It is based
+  on Ant, JUnit, Hibernate, Struts, Spring and java DB, Tiles2. This is some month 
+  long technological pilot project mainly focused on technical side integration on 
+  the most current version of the tools. 
+  The SmartBPM Console is Struts2 web based GUI distributed on a .war file format. 
+  The SmartBPM Engine API is .war application on an Axis/Axis2 based. It can be integrated 
+  by other systems by publication. We publish only the service layer which signed by 
+  annotation (@Transational).
+  The API doc is part of the application. You can easily accessed by clicking a link 
+  on a left main sub menu of APIDOC link.
+  
+  The product contains 3 parts:
+    o Smart BPM Engine : It can do some process movement by using webservice call
+    o Smart BPM Console: Process Management, Process Movements by hand
+    o Smart BPM Test Client: for WebService running from ant junit script
+  
+  The System Functionality:
+  -------------------------
+  
+  Process management: 
+   o User management (listing adding/deleting/modifing)
+   o Process forward, reward movements, starting and termination by the user
+   o Process definition can be defined by sequence of nodes
+   o A process can store its actual state, and actual concrete attribute names/values
+   o Node definitions by state and Attribute Types( a form on the Struts GUI represents 
+     a node )
+   o Nodes can have attributes filled with values.
+   o AttributeType can be any of the followings: boolean, int, string, date
+   o Attribute has a type and belongs to a Node. It can be added by filling
+     the form of the node.
+ 
+  
+  Technical needs:
+  ----------------
+  o Any Web container, at least Tomcat 6.x
+  o Any Database with jdbc ready made at least javaDB 10.x. or my
+  o Jdk 1.6 installed
+  o If you want to build from source you need ant 1.7.x at least.
+  
+  Limitations:
+  ------------
+  
+   o Element administration ( Process, Node, Attribute, AttributeType): 
+     In the current version is missing  
+   o Only support the sequencial movements of processes, like a modern time wizzard.
+   o Not supports switches of the flow or cycles
+   o Not supports list types for attributes.
+   o One process belongs one user and visa versa.
+   o The system can work on any Database which have jdbc driver but now
+   the build/maintenance scripts work best with Java DB shipped by Jdk 1.6
+   o Classes/jar are not signed
+   o No user right system defined yet
+   o The application is a web based application. 
+   o No restful webServide is used yet
+   o No web service API published yet
+   o No code tables are introduced to the project.
+  
+  Further versions:
+  -----------------
+  o I try to reduce as many limitations as I can.
+  o In future version the service layer will be published by web services (Axis/Axis 2)
+  o Next version of the jar dependency check will be maven or maven2 or ivy based.
+  
+  
+  The Latest Version
+  ------------------
+
+ v.0.1.11: July-7-20009:   Listing processes now is extended with nodes and nodes with attributes filled 
+                           and not filled. We are thinking of using the open session in view pattern, but 
+                           not really know what to do when using a domain model as parameter of web service. 
+  
+  Details of the latest version can be found on the doc directory of the distribution
+  
+  Contacts: csaba.tenkes@brevissimus.eu
+
+  Documentation
+  -------------
+
+  Logical model, Physical model, Tech Notes is available as is in the form of Word Document.
+  Code documentation is available in HTML format, in the docs/api directory.
+
+  Distribution:
+  -------------
+  Distributed by zip file with source and docs. It can be tried by junit tests.
+  Future version will be distributed by deployable Struts based web application (.war file).
+  It will be run on a simple web container (like Apache Tomcat), no ejb container is
+  needed.
+  
+
+  Licensing
+  ---------
+
+  The whole code and distribution is copyrighted.
+  All rights reserved to Csaba Tenkes <csaba.tenkes@brevissimus.eu> .
+  User can see the code, build, try it, but he/she can't copy, use any
+  part of the code, documentations. Business users can't be allowed to use it to 
+  business activities only it only the permission of the author or by done of a license
+  payment agreement.
+  
+  Thanks for seeing SmartBPM.
+
+                                          Csaba Tenkes
+                                         <http://brevissimus.eu/>
+                                         <csaba.tenkes@brevissimus.eu>

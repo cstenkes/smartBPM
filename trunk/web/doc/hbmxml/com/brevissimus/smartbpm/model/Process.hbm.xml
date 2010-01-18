@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2009.07.14. 16:07:29 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.brevissimus.smartbpm.model.Process" table="Process">
+        <id name="id" type="java.lang.Long">
+            <column name="process_id" />
+            <generator class="seqhilo">
+                <param name="max_lo">19</param>
+                <param name="sequence">SEQ_BBBPM</param>
+            </generator>
+        </id>
+        <property name="description" type="java.lang.String">
+            <column name="description" length="100" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="name" length="25" />
+        </property>
+        <many-to-one name="node" class="com.brevissimus.smartbpm.model.Node" cascade="all" fetch="join">
+            <column name="node_id" />
+        </many-to-one>
+        <many-to-one name="processType" class="com.brevissimus.smartbpm.model.ProcessType" cascade="all" fetch="join">
+            <column name="process_type_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="com.brevissimus.smartbpm.model.User" cascade="all" fetch="join">
+            <column name="useracc_id" not-null="true" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

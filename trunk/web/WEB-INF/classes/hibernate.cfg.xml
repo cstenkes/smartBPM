@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<!--  Brevissimus Co Hibernate config file-->
+
+        <hibernate-configuration>
+          <session-factory>
+            <property name="dialect">org.hibernate.dialect.DerbyDialect</property>
+            <property name="hibernate.connection.driver_class">org.apache.derby.jdbc.ClientDriver</property>
+            <property name="hibernate.connection.url">jdbc:derby://localhost:1527/brevissimus</property>
+            <property name="hibernate.connection.username">smartbpm</property>
+            <property name="hibernate.connection.password">smartbpm</property>
+            <property name="hibernate.connection.pool_size">10</property>
+            <property name="format_sql">false</property>
+            <property name="show_sql">true</property>
+            
+            <property name="hibernate.hbm2ddl.auto">update</property>
+            <mapping class="com.brevissimus.smartbpm.model.Attribute"/>
+            <mapping class="com.brevissimus.smartbpm.model.Node"/>
+            <mapping class="com.brevissimus.smartbpm.model.State"/>
+            <mapping class="com.brevissimus.smartbpm.model.Process"/>
+            <mapping class="com.brevissimus.smartbpm.model.ProcessType"/>
+            <mapping class="com.brevissimus.smartbpm.model.AttributeType"/>
+            <mapping class="com.brevissimus.smartbpm.model.User"/>
+          </session-factory>
+        </hibernate-configuration>

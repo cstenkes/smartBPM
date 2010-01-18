@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/tiles-config_2_0.dtd">
+ <tiles-definitions>  
+	<definition name="menu" >
+	  <put-list-attribute name="listMenuItems">
+	    <item value="main" tooltip="Main" link="pages/main.jsp" />
+	    <item value="processes" tooltip="Processes" link="processes/" />
+	    <item value="userAdmin" tooltip="User Administration" link="userAdmin/" />
+	    <item value="processTypeAdmin" tooltip="Process Type Admin" link="pages/processes.jsp" />
+	    <item value="history" tooltip="History" link="pages/history.jsp" />
+	  </put-list-attribute>
+	</definition>
+	<definition name="basic" template="/layouts/basic.jsp" extends="menu">  
+		<put-attribute name="selected" value="main" />
+		<put-attribute name="htmlHeader" value="/layouts/htmlHeader.jsp" />  
+		<put-attribute name="footer" value="/layouts/footer.jsp" /> 
+		<put-attribute name="leftMenu" value="/layouts/leftMenu.jsp" />
+		<put-attribute name="info" value="/layouts/info.jsp" /> 
+		<put-attribute name="content" value="/layouts/empty.jsp"/> 
+		<put-attribute name="title" value="default"/> 
+	</definition>  
+	<definition name="basicPre" template="/layouts/basicPre.jsp" extends="menu">  
+		<put-attribute name="selected" value="main" />
+		<put-attribute name="htmlHeader" value="/layouts/htmlHeader.jsp" />  
+		<put-attribute name="footer" value="/layouts/footer.jsp" /> 
+		<put-attribute name="leftMenu" value="/layouts/leftMenu.jsp" />
+		<put-attribute name="info" value="/layouts/info.jsp" /> 
+		<put-attribute name="content" value="/layouts/empty.jsp"/> 
+		<put-attribute name="title" value="default"/> 
+	</definition>  
+	<definition name="install" extends="basicPre">  
+		<put-attribute name="selected" value="main" />
+		<put-attribute name="content" value="/doc/INSTALL"/>  
+	</definition>  
+	<definition name="readme" extends="basicPre" >  
+		<put-attribute name="selected" value="main" />
+		<put-attribute name="content" value="/doc/README"/>  
+	</definition>  
+	<definition name="login" extends="basic">  
+		<put-attribute name="selected" value="main" />
+		<put-attribute name="title" value="Login"/>  
+		<put-attribute name="content" value="/layouts/login.jsp"/>  
+	</definition>  
+	<definition name="main" extends="basic">  
+		<put-attribute name="selected" value="main" />
+		<put-attribute name="content" value="/layouts/empty.jsp"/>  
+	</definition> 
+	
+	<definition name="list" extends="basic">
+		<put-attribute name="selected" value="main" />  
+		<put-attribute name="content" value="/layouts/login.jsp"/>  
+	</definition> 
+	<definition name="processes" extends="basic">
+		<put-attribute name="selected" value="processes" />  
+		<put-attribute name="content" value="/layouts/processes.jsp"/>  
+	</definition> 
+	<definition name="processDeatils" extends="basic">  
+		<put-attribute name="content" value="/layouts/empty.jsp"/>  
+	</definition> 
+	<definition name="userAdmin" extends="basic">
+		<put-attribute name="selected" value="userAdmin" />  
+		<put-attribute name="content" value="/layouts/list.jsp"/>  
+	</definition> 
+	<definition name="history" extends="basic">
+		<put-attribute name="selected" value="history" />  
+		<put-attribute name="content" value="/layouts/empty.jsp"/>  
+	</definition> 
+	<definition name="users" extends="basic">
+		<put-attribute name="selected" value="userAdmin" />  
+		<put-attribute name="content" value="/layouts/list.jsp"/>  
+	</definition> 
+</tiles-definitions>
