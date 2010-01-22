@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="src" path="test"/>
+	<classpathentry excluding="**/.svn" kind="src" path="src"/>
+	<classpathentry excluding="**/.svn" kind="src" path="test"/>
 	<classpathentry kind="lib" path="lib/derby/derbyclient.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ant-junit.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/antlr-2.7.6.jar"/>
