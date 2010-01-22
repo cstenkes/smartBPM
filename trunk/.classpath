@@ -2,32 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="test"/>
-	<classpathentry kind="lib" path="tools/hibernate/antlr-2.7.6.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/bsh-2.0b1.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/commons-collections-3.1.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/commons-logging-1.0.4.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/ejb3-persistence.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/freemarker.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate-annotations.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate-commons-annotations.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate-core.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate-entitymanager.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate-search.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate-shards.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate-tools.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate-validator.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/hibernate3.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/javassist-3.4.GA.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/jms.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/jsr250-api.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/jta-1.1.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/jtidy-r8-20060801.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/lucene-core.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/solr-common.jar"/>
-	<classpathentry kind="lib" path="tools/hibernate/solr-core.jar"/>
-	<classpathentry kind="lib" path="tools/slf4j-1.5.6/slf4j-api-1.5.6.jar"/>
-	<classpathentry kind="lib" path="tools/slf4j-1.5.6/slf4j-simple-1.5.6.jar"/>
 	<classpathentry kind="lib" path="lib/derby/derbyclient.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/ant-junit.jar"/>
 	<classpathentry kind="lib" path="web/WEB-INF/lib/antlr-2.7.6.jar"/>
