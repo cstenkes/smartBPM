@@ -1,0 +1,27 @@
+  TODO of Smart BPM
+  --------------------
+ 
+  o Embedded with it's own database engine (f.ex: Java DB)
+  o Bundled with tomcat and preconfigured to work well
+  o Default data set must be contained more cases with more users.
+  o Hibernate configuration improvement to avoid n+1 select problem
+  o Rollback strategy must be introduced
+  o View element tags  to generate better html looking
+  o Generate pagined version of services
+  o View element to support of pagination
+  o Writing a webservice publication interface with Axis2
+  o More and full functionality must be introduced on the smartBpm_console to be able
+    to work process as wizard.
+  o User right management must be introduced.
+
+  Roadmap
+  -------
+
+  1.0. will cover the list above 					about the end of 2010
+
+  2.0. improvement: 								from 2011
+    o process can have version number, and can be valid till date
+    o process can be a graph it can have loop and conditions
+    o functionality will compared with other product of the segment of business
+    o a node can be a outside webService call
+    o a node can be any jca call and so one

@@ -57,7 +57,7 @@
   
    o Element administration ( Process, Node, Attribute, AttributeType): 
      In the current version is missing  
-   o Only support the sequencial movements of processes, like a modern time wizzard.
+   o Only support the sequential movements of processes, like a modern time wizard.
    o Not supports switches of the flow or cycles
    o Not supports list types for attributes.
    o One process belongs one user and visa versa.
