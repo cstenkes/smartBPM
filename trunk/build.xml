@@ -292,8 +292,8 @@
    <target name="dist"  depends="dist-no-mail,mail">
    </target>
 
-   <target name="mail"  description="Sending mail">
-       <tstamp>
+   <target name="mail"  description="Sending mail" >
+   		<tstamp>
                 <format property="build.num" pattern="yyyyMMddHHmmss" />
        </tstamp>
        <mail from="${buildmaster_email}"
@@ -303,7 +303,8 @@
              user="${smtp_user}"
              password="${smtp_password}"
              subject="Results of build of ${app.name} v${app.version}-b${build.num}"
-             messagefile="build.log"
+             messagefile="build.log" 
+       		
        />
    </target>
 	
