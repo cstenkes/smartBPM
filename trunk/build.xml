@@ -106,7 +106,6 @@
 	</target>
 	
 	<target name="create_war" description="Creates the war file">
-
 		
 		<copy todir="${build.dir}/web/WEB-INF/classes">
 			<fileset dir="${classes.dir}">
@@ -290,21 +289,24 @@
 		</jar>		
 	</target>
 
-   <target name="dist"  description="Sending mail">
-   	<ant antfile="build.xml" dir="." target="dist-no-mail" output="build.log" />
+   <target name="dist"  depends="dist-no-mail,mail">
+   </target>
+
+   <target name="mail"  description="Sending mail">
        <tstamp>
                 <format property="build.num" pattern="yyyyMMddHHmmss" />
        </tstamp>
-       <mail from="buildmaster@brevissimus.eu"
-                  tolist="csaba.tenkes@brevissimus.eu"
-                  mailhost="${smtp_host}" 
-            	  mailport="${smtp_port}"
-            	  user="${smtp_user}"
-            	  password="${smtp_password}"
-            	  subject="Results of build of ${app.name} v${app.version}-b${build.num}"
-                  messagefile="build.log"
+       <mail from="${buildmaster_email}"
+             tolist="${project_member_emails}"
+             mailhost="${smtp_host}" 
+             mailport="${smtp_port}"
+             user="${smtp_user}"
+             password="${smtp_password}"
+             subject="Results of build of ${app.name} v${app.version}-b${build.num}"
+             messagefile="build.log"
        />
    </target>
+	
 	
 	<!-- hibernate tasks -->
 	<path id="hibernatelib">
@@ -391,6 +393,33 @@
 	   </sql>
 	</target>	
 
+	<target name="derby_start">
+		<java jar="${db_home}/lib/derbyrun.jar"
+			fork="true">
+		     <arg value="server"/>
+		     <arg value="start"/>
+			<classpath>
+	           <pathelement location="${db_home}/lib/derbyrun.jar"/>
+		       <pathelement location="${db_home}/lib/derbyLocale_hu.jar"/>
+	           <pathelement path="${java.class.path}"/>
+	         </classpath>
+		</java>
+	</target>
+
+	<target name="derby_stop">
+		<java jar="${db_home}/lib/derbyrun.jar"
+			fork="true">
+		     <arg value="server"/>
+		     <arg value="shutdown"/>
+				<classpath>
+		           <pathelement location="${db_home}/lib/derbyrun.jar"/>
+			       <pathelement location="${db_home}/lib/derbyLocale_hu.jar"/>
+		           <pathelement path="${java.class.path}"/>
+		         </classpath>
+		</java>
+	</target>
+
+	
 	<target name="derby_shutdown_db" description="Create DB Schema" >
 		<sql
 		    driver="org.apache.derby.jdbc.ClientDriver"

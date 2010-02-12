@@ -2,17 +2,20 @@
   --------------------
  
   o Embedded with it's own database engine (f.ex: Java DB)
+  o Simple war file distribution without source
   o Bundled with tomcat and preconfigured to work well
   o Default data set must be contained more cases with more users.
   o Hibernate configuration improvement to avoid n+1 select problem
   o Rollback strategy must be introduced
   o View element tags  to generate better html looking
-  o Generate pagined version of services
+  o Generate paginated version of services
   o View element to support of pagination
   o Writing a webservice publication interface with Axis2
   o More and full functionality must be introduced on the smartBpm_console to be able
     to work process as wizard.
   o User right management must be introduced.
+
+
 
   Roadmap
   -------
