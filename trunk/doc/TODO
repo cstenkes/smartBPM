@@ -14,7 +14,11 @@
   o More and full functionality must be introduced on the smartBpm_console to be able
     to work process as wizard.
   o User right management must be introduced.
-
+  o Hibernate fatching strategy must be considered.
+  o Struts 2 will be dropped and Spring MVC or JSF / IceFaces will be added for view
+  o DTO / ValueObject will be dropped and OpenSessionInView or other current pattern will
+    be used to be able to handle native hibernate objects
+  o Detouched object / Eager fatching 
 
 
   Roadmap
