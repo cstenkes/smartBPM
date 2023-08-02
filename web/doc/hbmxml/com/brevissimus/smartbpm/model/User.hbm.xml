@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2009.07.14. 16:07:29 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.brevissimus.smartbpm.model.User" table="user_acc">
+        <id name="id" type="java.lang.Long">
+            <column name="user_acc_id" />
+            <generator class="org.hibernate.id.MultipleHiLoPerTableGenerator">
+                <param name="max_lo">0</param>
+            </generator>
+        </id>
+        <property name="email" type="java.lang.String">
+            <column name="email" length="100" />
+        </property>
+        <property name="firstName" type="java.lang.String">
+            <column name="first_name" length="50" />
+        </property>
+        <property name="lastName" type="java.lang.String">
+            <column name="last_name" length="50" />
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="name" length="25" />
+        </property>
+        <property name="password" type="java.lang.String">
+            <column name="password" length="25" />
+        </property>
+        <property name="phone" type="java.lang.String">
+            <column name="phone" length="25" />
+        </property>
+    </class>
+</hibernate-mapping>

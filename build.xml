@@ -1,0 +1,526 @@
+<!-- Brevissimus Co. build file-->
+<project name="smartbpm" default="test" basedir=".">
+	<property file="build.properties" />
+	
+	<property name="build.dir" value="${basedir}/build" />
+	<property name="dist.dir" value="${basedir}/dist" />
+	<property name="conf.dir" value="${basedir}/conf" />	
+	<property name="db.dir" value="${basedir}/db" />	
+	<property name="doc.dir" value="${basedir}/doc" />
+	<property name="src.dir" value="${basedir}/src" />
+	<property name="res.dir" value="${basedir}/res" />
+	<property name="test.dir" value="${basedir}/test" />
+	<property name="tools.dir" value="${basedir}/tools" />
+	<property name="spring.root" value="${basedir}/lib/spring-framework-2.5.6.SEC01" />
+	<property name="web.dir" value="${basedir}/web" />
+	<property name="weblib.dir" value="${web.dir}/WEB-INF/lib" />
+	<property name="lib.dir" value="${basedir}/lib" />
+	<property name="classes.dir" value="${basedir}/bin" />
+	<property name="classes2.dir" value="${basedir}/classes" />
+	<property name="derby.dir" value="${db_home}" />
+	<property name="compile.debug" value="true" />
+	<property name="compile.deprecation" value="false" />
+	<property name="compile.optimize" value="true" />
+	
+	<path id="class.path">
+		<fileset dir="${lib.dir}/derby">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/hibernate">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/junit-4.6">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/spring-framework-3.0.0.M3">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/struts2">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/tiles-2.0.6">
+			<include name="**/*.jar" />
+		</fileset>
+		<fileset dir="${lib.dir}/jstl-1.2">
+			<include name="**/*.jar" />
+		</fileset>
+        <fileset dir="${lib.dir}/mail-1.4.2">
+            <include name="**/*.jar" />
+        </fileset>
+	</path>
+	
+	<!-- build tasks -->
+	<target name="java_doc">
+		<javadoc
+	        destdir="doc/api"
+	        author="true"
+	        version="true"
+	        use="true"
+	        windowtitle="SmartBPM API" classpathref="class.path" >
+	            <fileset dir="src" defaultexcludes="yes">
+	                <include name="**/*.java" />
+	            </fileset>
+		</javadoc>
+	</target>
+
+	<target name="compile" depends="clean, create" description="Compile Java sources">
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}">
+				<include name="*.*"/>
+			</fileset>
+		</copy>
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+			<classpath refid="class.path" />
+		</javac>
+		<javac srcdir="${test.dir}" destdir="${classes.dir}" debug="${compile.debug}" deprecation="${compile.deprecation}" optimize="${compile.optimize}">
+			<classpath refid="class.path" />
+		</javac>
+		
+	</target>
+
+	<target name="clean" description="clean old classes and directories">
+		<delete dir="${web.dir}/doc" failonerror="no"/>
+		<delete dir="${build.dir}" failonerror="no"/>
+		<delete file="${dist.dir}/${app.name}_v${app.version}.zip" failonerror="no"/>
+	</target>
+
+	<target name="create" description="create necessary directories">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.dir}/classes" />
+		<mkdir dir="${web.dir}/doc" />
+	</target>
+
+	<target name="init" description="header comment">
+		<echo>--------------------------------</echo>
+		<echo>Start creating ${app.name} v${app.version}</echo>
+		<echo>--------------------------------</echo>
+	</target>
+	
+	<target name="dist-no-mail" depends="init,compile,hbm_schema_exp,java_doc,create_war" description="Creates the war file">
+		<echo>--------------------------------</echo>
+		<echo>End creating ${app.name} v${app.version}</echo>
+		<echo>--------------------------------</echo>
+	</target>
+	
+	<target name="install" depends="create_db,create_db2,create_db3" description="Creates the war file">
+	</target>
+	
+	<target name="create_war" description="Creates the war file">
+		
+		<copy todir="${build.dir}/web/WEB-INF/classes">
+			<fileset dir="${classes.dir}">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}">
+			<fileset dir="${doc.dir}">
+				<include name="README"/>
+				<include name="INSTALL"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${build.dir}/doc">
+			<fileset dir="${doc.dir}">
+				<include name="README"/>
+				<include name="INSTALL"/>
+				<include name="*.doc"/>
+				<include name="api/**/*"/>
+				<include name="hbmcfg/**/*"/>
+				<include name="hbmxml/**/*"/>
+				<include name="model/**/*"/>	
+			</fileset>
+		</copy>
+		
+		<replace file="${build.dir}/doc/INSTALL" token="@@@app.version@@@" value="${app.version}"/>
+        <replace file="${build.dir}/doc/README" token="@@@app.version@@@" value="${app.version}"/>
+		
+		<copy todir="${build.dir}/src" includeemptydirs="true">
+			<fileset dir="${src.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/db">
+			<fileset dir="${db.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/lib">
+			<fileset dir="${lib.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/web/WEB-INF/lib">
+			<fileset dir="${lib.dir}/derby">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${lib.dir}/hibernate">
+				<include name="*.jar" />
+				<exclude name="freemarker.jar"/>
+				<exclude name="commons-logging-1.0.4.jar"/>
+			</fileset>
+			<fileset dir="${lib.dir}/junit-4.6">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${lib.dir}/spring-framework-3.0.0.M3">
+				<include name="*.jar" />
+			</fileset>
+			<fileset dir="${lib.dir}/struts2">
+				<include name="*.jar" />
+				<exclude name="struts2-spring-plugin-2.1.6.jar" />
+			</fileset>
+			<fileset dir="${lib.dir}/tiles-2.0.6">
+				<include name="**/*.jar" />
+			</fileset>
+			<fileset dir="${lib.dir}/jstl-1.2">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+
+		<copy todir="${build.dir}/res">
+			<fileset dir="${res.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/test">
+			<fileset dir="${test.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}">
+			<fileset dir="${basedir}">
+				<include name="build.xml"/>
+				<include name="build.properties"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/web">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${build.dir}/web/WEB-INF" overwrite="true">
+			<fileset dir="${conf.dir}">
+				<include name="web.xml"/>
+			</fileset>
+		</copy>
+		<copy todir="${build.dir}/web" overwrite="true">
+			<fileset dir="${conf.dir}">
+				<include name="index.html"/>
+			</fileset>
+		</copy>
+		
+		<replace file="${build.dir}/web/index.html" token="@@@app.version@@@" value="${app.version}"/>
+		<replace file="${build.dir}/web/WEB-INF/web.xml" token="@@@app.version@@@" value="${app.version}"/>
+
+		<copy todir="${build.dir}/web/doc" overwrite="true">
+			<fileset dir="${build.dir}/doc">
+				<include name="INSTALL"/>
+				<include name="README"/>
+			</fileset>
+		</copy>
+
+		<copy todir="${web.dir}/doc" overwrite="true">
+            <fileset dir="${build.dir}/doc">
+                <include name="INSTALL"/>
+                <include name="README"/>
+            </fileset>
+        </copy>
+		
+        <copy todir="${web.dir}/doc">
+              <fileset dir="${build.dir}/doc">
+                  <include name="**/*"/>
+              </fileset>
+        </copy>
+		
+		<copy todir="${web.dir}/WEB-INF" overwrite="true">
+			<fileset dir="${conf.dir}">
+				<include name="web.xml"/>
+			</fileset>
+		</copy>
+		
+		<copy todir="${web.dir}" overwrite="true">
+			<fileset dir="${conf.dir}">
+				<include name="index.html"/>
+			</fileset>
+		</copy>
+
+		<replace file="${web.dir}/index.html" token="@@@app.version@@@" value="${app.version}"/>
+		<replace file="${web.dir}/WEB-INF/web.xml" token="@@@app.version@@@" value="${app.version}"/>
+		
+		<tstamp>
+	            <format property="today" pattern="yyyy-MM-dd HH:mm:ss" />
+	    </tstamp>
+		<tstamp>
+	            <format property="build.num" pattern="yyyyMMddHHmmss" />
+	    </tstamp>
+		<manifestclasspath property="jar.classpath" jarfile="${dist.dir}/${app.name}_v${app.version}.war" >
+		      <classpath refid="class.path"/>    
+		</manifestclasspath> 
+		
+		<jar jarfile="${dist.dir}/${app.name}_v${app.version}.zip" basedir="${build.dir}" >
+			<manifest>
+				<attribute name="Created-By" value="ant"/>
+				<attribute name="Built-By" value="Csaba Tenkes"/>
+				<attribute name="Built-Date" value="${today}" /> 
+	    		<attribute name="Specification-Title" value="Brevissimus Co. Smart BPM Solution"/>
+	      		<attribute name="Specification-Version" value="${app.version}"/>
+	      		<attribute name="Specification-Vendor" value="Brevissimus Co."/>
+	      		<attribute name="Implementation-Title" value="Brevissimus Co. Smart BPM Solution"/>
+	      		<attribute name="Implementation-Version" value="${app.version}-b${build.num}"/> 
+	      		<attribute name="Implementation-Vendor" value="Brevissimus Co."/>
+		  	</manifest> 
+		</jar>
+		<jar jarfile="${dist.dir}/${app.name}_console_v${app.version}.war" basedir="${build.dir}"
+		    excludes="db/, classes/, web/, lib/, res/, com/, test/">	
+			<manifest>
+				<attribute name="Created-By" value="ant"/>
+		    	<attribute name="Built-By" value="Csaba Tenkes"/>
+				<attribute name="Built-Date" value="${today}" /> 
+	    		<attribute name="Specification-Title" value="Brevissimus Co. BPM Solution"/>
+	      		<attribute name="Specification-Version" value="${app.version}"/>
+	      		<attribute name="Specification-Vendor" value="Brevissimus Co."/>
+	      		<attribute name="Implementation-Title" value="Brevissimus Co. BPM Solution"/>
+	      		<attribute name="Implementation-Version" value="${app.version}-b${build.num}"/> 
+	      		<attribute name="Implementation-Vendor" value="Brevissimus Co."/>
+		  	</manifest> 
+			<fileset dir="${build.dir}/web">
+				<include name="**/*.*"/>
+			</fileset>
+		</jar>		
+	</target>
+
+   <target name="dist"  depends="dist-no-mail,mail">
+   </target>
+
+   <target name="mail"  description="Sending mail" >
+   		<tstamp>
+                <format property="build.num" pattern="yyyyMMddHHmmss" />
+       </tstamp>
+       <mail from="${buildmaster_email}"
+             tolist="${project_member_emails}"
+             mailhost="${smtp_host}" 
+             mailport="${smtp_port}"
+             user="${smtp_user}"
+             password="${smtp_password}"
+             subject="Results of build of ${app.name} v${app.version}-b${build.num}"
+             messagefile="build.log" 
+       		
+       />
+   </target>
+	
+	
+	<!-- hibernate tasks -->
+	<path id="hibernatelib">
+		<path location="${basedir}/lib/hibernate/hibernate-tools.jar" />
+		<path location="${basedir}/lib/hibernate/hibernate3.jar" />
+		<path location="${basedir}/lib/hibernate/freemarker.jar" />
+		<path location="${basedir}/lib/hibernate/hibernate-annotations.jar" />
+		<path location="${basedir}/lib/hibernate/hibernate-commons-annotations.jar" />
+		<path location="${basedir}/lib/hibernate/ejb3-persistence.jar" /> 
+		<path location="${basedir}/lib/hibernate/commons-logging-1.0.4.jar"/> 
+		<path location="${basedir}/lib/hibernate/dom4j-1.6.1.jar"/>
+		<path location="${basedir}/lib/hibernate/slf4j-api-1.5.2.jar"/> 
+		<path location="${basedir}/lib/hibernate/slf4j-log4j12.jar"/>
+		<path location="${basedir}/lib/hibernate/log4j.jar"/>
+		<path location="${basedir}/lib/hibernate/jtidy-r8-20060801.jar"/>
+	</path>
+
+	<taskdef name="hibernatetool" 
+	 classname="org.hibernate.tool.ant.HibernateToolTask" 
+	 classpathref="hibernatelib" />
+
+	<target name="hbm_schema_exp" description="Generates Hibernate DB-Schema">
+		<hibernatetool destdir="${build.dir}">
+		    <annotationconfiguration configurationfile="${classes.dir}/hibernate.cfg.xml"/>
+			<classpath>
+			  <path location="${classes.dir}">
+			  </path>
+				<path refid="class.path" />
+			  <path location="${lib.dir}/derby/derbyclient.jar"/>
+			</classpath>	
+			<hbm2hbmxml destdir="${doc.dir}/hbmxml"/>		
+		
+			<hbmtemplate destdir="${src.dir}" templatepath="${basedir}/res" template="basedao.ftl" filepattern="{package-name}/dao/Base{class-name}DAO.java">
+				<property key="jdk5" value="true"/>
+				<property key="ejb3" value="false"/>
+			</hbmtemplate>
+			 
+			<hbm2java
+				jdk5="true"
+				ejb3="true" destdir="${doc.dir}/def"/>
+			
+			<hbm2doc destdir="${doc.dir}/model" />
+			
+			<hbm2cfgxml destdir="${doc.dir}/hbmcfg"/>
+			
+			<hbm2ddl
+				destdir="${db.dir}"
+				export="false"
+				update="false"
+				drop="true"
+				create="false"
+				format="true"
+			 	outputfilename="smartbpm_drop.sql"
+				delimiter=";"
+				haltonerror="true"
+			/>
+			<hbm2ddl
+				destdir="${db.dir}"
+				export="false"
+				update="false"
+				drop="false"
+				create="true"
+				format="true"
+			 	outputfilename="smartbpm_create.sql"
+				delimiter=";"
+				haltonerror="true"
+			/>
+		</hibernatetool>
+	</target>		
+
+	<!-- derby tasks -->
+	<target name="create_db" description="Create DB Schema">
+		<sql
+		    driver="org.apache.derby.jdbc.ClientDriver"
+		    url="${db_jdbc_url}/${db_instance};create=true;"
+		    userid="${db_user}"
+		    password="${db_password}"
+			classpath="${basedir}/lib/derby/derbyclient.jar"
+			print="true"
+			autocommit="false" 
+			onerror="continue"
+		>
+		--
+	   </sql>
+	</target>	
+
+	<target name="derby_start">
+		<java jar="${db_home}/lib/derbyrun.jar"
+			fork="true">
+		     <arg value="server"/>
+		     <arg value="start"/>
+			<classpath>
+	           <pathelement location="${db_home}/lib/derbyrun.jar"/>
+		       <pathelement location="${db_home}/lib/derbyLocale_hu.jar"/>
+	           <pathelement path="${java.class.path}"/>
+	         </classpath>
+		</java>
+	</target>
+
+	<target name="derby_stop">
+		<java jar="${db_home}/lib/derbyrun.jar"
+			fork="true">
+		     <arg value="server"/>
+		     <arg value="shutdown"/>
+				<classpath>
+		           <pathelement location="${db_home}/lib/derbyrun.jar"/>
+			       <pathelement location="${db_home}/lib/derbyLocale_hu.jar"/>
+		           <pathelement path="${java.class.path}"/>
+		         </classpath>
+		</java>
+	</target>
+
+	
+	<target name="derby_shutdown_db" description="Create DB Schema" >
+		<sql
+		    driver="org.apache.derby.jdbc.ClientDriver"
+		    url="${db_jdbc_url}/${db_instance};shutdown=true;"
+		    userid="${db_user}"
+		    password="${db_password}"
+			classpath="${basedir}/lib/derby/derbyclient.jar"
+			print="true"
+			autocommit="yes" 
+			onerror="continue"
+			
+		>
+		--
+		</sql>
+	</target>	
+
+	<target name="derby_shutdown" description="Create DB Schema">
+		<sql
+		    driver="org.apache.derby.jdbc.ClientDriver"
+		    url="${db_jdbc_url}/;shutdown=true;"
+		    userid="${db_user}"
+		    password="${db_password}"
+			classpath="${basedir}/lib/derby/derbyclient.jar"
+			print="true"
+			autocommit="yes" 
+			onerror="continue"
+		>
+		--
+		</sql>
+	</target>	
+	
+	<target name="create_db2" description="Create DB Schema">
+		<sql
+		    driver="org.apache.derby.jdbc.ClientDriver"
+		    url="${db_jdbc_url}/${db_instance}"
+		    userid="${db_user}"
+		    password="${db_password}"
+			classpath="${basedir}/lib/derby/derbyclient.jar"
+			print="true"
+			autocommit="yes" 
+			onerror="continue"
+			keepformat="on"
+		>
+			<transaction src="${db.dir}/smartbpm_drop.sql"/>
+			<transaction src="${db.dir}/smartbpm_create.sql"/>
+		</sql>
+	</target>	
+
+	<target name="create_db3" description="Delete all,Insert default data">
+		<sql
+		    driver="org.apache.derby.jdbc.ClientDriver"
+			url="${db_jdbc_url}/${db_instance}"
+			userid="${db_user}"
+			password="${db_password}"
+			classpath="${basedir}/lib/derby/derbyclient.jar"
+			print="true"
+			autocommit="no" 
+			onerror="continue"
+			keepformat="on"
+			showheaders="true"
+			version="10.2"
+		>
+			<transaction src="${db.dir}/smartbpm_delete.sql"/>
+			<transaction src="${db.dir}/smartbpm_default.sql"/>
+			<transaction src="${db.dir}/smartbpm_hibernate_hack_create.sql"/>
+			<transaction src="${db.dir}/smartbpm_hibernate_hack_insert.sql"/>
+		</sql>
+	</target>	
+
+	
+	<target name="derby_drop_db" description="Drop DB Schema(DB must be shutdown before running it!)">
+		<delete includeEmptyDirs="true">
+		    <fileset dir="${derby.dir}/${db_instance}"/>
+	    </delete>
+	</target>	
+	
+	<!-- JUnit tasks -->
+	
+	<path id="junitlib">
+		<path location="${basedir}/lib/junit-4.6/junit-4.6.jar" />
+		<path location="${basedir}/lib/junit-4.6/ant-junit.jar" />
+		<fileset dir="${classes.dir}" id="id">
+			 <include name="hibernate.cfg.xml"/>
+		</fileset>
+	</path>
+	
+	<taskdef name="junit" 
+		 classname="org.apache.tools.ant.taskdefs.optional.junit.JUnitTask" 
+		 classpathref="junitlib" />
+	
+	<target name="test" description="TEST">
+		<junit printsummary="yes" haltonfailure="no" >
+			  <classpath>
+			 	<path refid="class.path" />			  	
+			 	<path location="${classes.dir}" />
+			  </classpath>
+			<test name="com.brevissimus.smartbpm.service.AllTests" haltonfailure="no" outfile="unittest">
+				<formatter type="plain" usefile="no"/>
+			</test>
+		</junit>
+	</target>	
+	
+</project>

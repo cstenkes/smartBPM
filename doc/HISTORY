@@ -1,0 +1,40 @@
+  History of Smart BPM
+  --------------------
+  
+  v.0.1.11: July-7-20009:   Listing processes now is extended with nodes and nodes with attributes filled and not filled.
+                            We are thinking of using the open session in view pattern, but not really know what to
+                            to do when using a domain model as parameter of web service.
+  v.0.1.10: July-3-20009:   Listing processes now is almost ready. 
+  v.0.1.9: June-26-20009:   Adding new user is ready. Some problem can occur with deleting user,
+                            if the user has some processes it is about spring problems.
+  v.0.1.8: June-24-20009:   Modify, delete, drop and search user is added to the system.
+                            Adding new user will working in the next build.
+  v.0.1.7: June-23-20009:   Tiles2 is added and configured properly. Project menu is ready to
+                            use. Some left renaming has done. Ant script is improved a bit.
+  v.0.1.6: June-19-20009:   Struts2 theme customized to fit the Clickable. For the View Model
+                            we use Struts Tiles 2. The integration to the project is finished.
+                            First dynamic page is now finished.
+                            The project is renamed to Brevissimus Co. SmartBPM.
+  v.0.1.5: June-11-20009:   Better integration to Struts2 and Tomcat.
+                            Now the environment is ready for viewing on the fly modifications and debug it.
+  v.0.1.4: June-10-20009:   Static html template added to the project.
+  v.0.1.3: June-9-20009:    Struts 2.x-Tomcat 6.x added to the project.
+                            Spring-Hibernate-JUnit dependencies fixed manually to be able to work from ant.
+                            Hibernate query logger is added to the project to better debug facilities.
+  v.0.1.2: June-5-20009:    DTO and factories added
+                            Struts classes is ready to add. Package structure is ready.
+  v.0.1.1: May-20-20009:    Spring is added to declared transaction handling  
+  v.0.1.0: May-14-20009:    The next parts are almost ready:
+                            design of logical and physical model
+                            o Database model
+                            o Entity model
+                            o java DB configuration
+                            o java BaseDAO generation
+                            o java BaseService generation
+                            o jUnit integration with ant scripts
+                            o basic jUnit tests
+                            o basic user defined DAOs
+                            o basic user defined services
+                            o transaction management (By spring)is prepared for it
+  v.0.0.1: May-04-20009:    Starting the project led by the BPM idea, and starting
+                            creating the design documentations.
